@@ -1,9 +1,9 @@
-package com.nitesr.ik.ds;
+package com.nitesr.prep.ik.ds;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static com.nitesr.utils.PrintArray.printIntArray;
+import static com.nitesr.prep.utils.PrintArray.printIntArray;
 
 
 public class PriorityQueue {

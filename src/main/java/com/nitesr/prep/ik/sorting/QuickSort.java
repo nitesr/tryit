@@ -1,9 +1,11 @@
-package com.nitesr.ik.sorting;
+package com.nitesr.prep.ik.sorting;
+
+import com.nitesr.prep.utils.PrintArray;
 
 import java.util.Arrays;
 import java.util.Random;
 
-import static com.nitesr.utils.PrintArray.printIntArray;
+import static com.nitesr.prep.utils.PrintArray.printIntArray;
 
 /**
  * Created by nitesh on 1/24/22.
@@ -60,34 +62,34 @@ public class QuickSort {
 
         int[] array1 = new int[]{10, 30, 5, 23, 60, 2, 45, 90};
         int[] sortedArray1 = quickSort.sort(array1);
-        System.out.println(printIntArray(array1) + ".sort = " + printIntArray(sortedArray1));
+        System.out.println(PrintArray.printIntArray(array1) + ".sort = " + PrintArray.printIntArray(sortedArray1));
 
         int[] array2 = new int[]{};
         int[] sortedArray2 = quickSort.sort(array2);
-        System.out.println(printIntArray(array2) + ".sort = " + printIntArray(sortedArray2));
+        System.out.println(PrintArray.printIntArray(array2) + ".sort = " + PrintArray.printIntArray(sortedArray2));
 
         int[] array3 = new int[]{10};
         int[] sortedArray3 = quickSort.sort(array3);
-        System.out.println(printIntArray(array3) + ".sort = " + printIntArray(sortedArray3));
+        System.out.println(PrintArray.printIntArray(array3) + ".sort = " + PrintArray.printIntArray(sortedArray3));
 
         int[] array4 = new int[]{10, 30};
         int[] sortedArray4 = quickSort.sort(array4);
-        System.out.println(printIntArray(array4) + ".sort = " + printIntArray(sortedArray4));
+        System.out.println(PrintArray.printIntArray(array4) + ".sort = " + PrintArray.printIntArray(sortedArray4));
 
         int[] array5 = new int[]{10, 5, 30};
         int[] sortedArray5 = quickSort.sort(array5);
-        System.out.println(printIntArray(array5) + ".sort = " + printIntArray(sortedArray5));
+        System.out.println(PrintArray.printIntArray(array5) + ".sort = " + PrintArray.printIntArray(sortedArray5));
 
         int[] array6 = new int[]{2, 30, 5, 23, 60, 2, 5, 90};
         int[] sortedArray6 = quickSort.sort(array6);
-        System.out.println(printIntArray(array6) + ".sort = " + printIntArray(sortedArray6));
+        System.out.println(PrintArray.printIntArray(array6) + ".sort = " + PrintArray.printIntArray(sortedArray6));
 
         int[] array7 = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
         int[] sortedArray7 = quickSort.sort(array7);
-        System.out.println(printIntArray(array7) + ".sort = " + printIntArray(sortedArray7));
+        System.out.println(PrintArray.printIntArray(array7) + ".sort = " + PrintArray.printIntArray(sortedArray7));
 
         int[] array8 = new int[]{10, 10};
         int[] sortedArray8 = quickSort.sort(array8);
-        System.out.println(printIntArray(array8) + ".sort = " + printIntArray(sortedArray8));
+        System.out.println(PrintArray.printIntArray(array8) + ".sort = " + PrintArray.printIntArray(sortedArray8));
     }
 }

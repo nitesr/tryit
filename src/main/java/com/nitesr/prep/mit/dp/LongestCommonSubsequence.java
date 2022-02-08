@@ -1,6 +1,6 @@
-package com.nitesr.mit.dp;
+package com.nitesr.prep.mit.dp;
 
-import static com.nitesr.utils.PrintArray.printObjectArray;
+import com.nitesr.prep.utils.PrintArray;
 
 public class LongestCommonSubsequence {
 
@@ -68,19 +68,19 @@ public class LongestCommonSubsequence {
 
     public static void main(String[] args) {
         String[] ip1 = {"empathy", "empty"};
-        System.out.println(printObjectArray(ip1) + ".lcs() = " +
+        System.out.println(PrintArray.printObjectArray(ip1) + ".lcs() = " +
                 "empty".length() + " == " +
                 new LongestCommonSubsequence().lcs(ip1[0], ip1[1]) + " == " +
                 new LongestCommonSubsequence().lcsBottomUp(ip1[0], ip1[1]));
 
         String[] ip2 = {"empathy", ""};
-        System.out.println(printObjectArray(ip2) + ".lcs() = " +
+        System.out.println(PrintArray.printObjectArray(ip2) + ".lcs() = " +
                 "".length() + " == " +
                 new LongestCommonSubsequence().lcs(ip2[0], ip2[1]) + " == " +
                 new LongestCommonSubsequence().lcsBottomUp(ip2[0], ip2[1]));
 
         String[] ip3 = {"empathy", "empathy"};
-        System.out.println(printObjectArray(ip3) + ".lcs() = " +
+        System.out.println(PrintArray.printObjectArray(ip3) + ".lcs() = " +
                 "empathy".length() + " == " +
                 new LongestCommonSubsequence().lcs(ip3[0], ip3[1]) + " == " +
                 new LongestCommonSubsequence().lcsBottomUp(ip3[0], ip3[1]));

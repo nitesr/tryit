@@ -1,8 +1,8 @@
-package com.nitesr.ik.sorting;
+package com.nitesr.prep.ik.sorting;
 
 import java.util.Arrays;
 
-import static com.nitesr.utils.PrintArray.printIntArray;
+import static com.nitesr.prep.utils.PrintArray.printIntArray;
 
 /**
  * Created by nitesh on 1/22/22.

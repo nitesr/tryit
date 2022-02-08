@@ -1,6 +1,4 @@
-package com.nitesr.mit.dp;
-
-import static com.nitesr.utils.PrintArray.printObjectArray;
+package com.nitesr.prep.mit.dp;
 
 public class LongestIncreasingSubsequence {
     Integer[] memo = new Integer[0];
