@@ -3,7 +3,7 @@ package com.nitesr.ik.sorting;
 import java.util.Arrays;
 import java.util.Random;
 
-import static com.nitesr.ik.utils.PrintArray.printIntArray;
+import static com.nitesr.utils.PrintArray.printIntArray;
 
 /**
  * Created by nitesh on 1/24/22.

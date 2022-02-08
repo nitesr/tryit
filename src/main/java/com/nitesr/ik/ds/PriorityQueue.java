@@ -3,7 +3,7 @@ package com.nitesr.ik.ds;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static com.nitesr.ik.utils.PrintArray.printIntArray;
+import static com.nitesr.utils.PrintArray.printIntArray;
 
 
 public class PriorityQueue {

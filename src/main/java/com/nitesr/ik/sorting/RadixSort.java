@@ -1,11 +1,11 @@
 package com.nitesr.ik.sorting;
 
-import com.nitesr.ik.utils.Pair;
+import com.nitesr.utils.Pair;
 
 import java.util.Arrays;
 import java.util.function.Function;
 
-import static com.nitesr.ik.utils.PrintArray.printObjectArray;
+import static com.nitesr.utils.PrintArray.printObjectArray;
 
 public class RadixSort<T> {
     final T[] array;

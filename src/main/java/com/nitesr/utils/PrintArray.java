@@ -1,4 +1,4 @@
-package com.nitesr.ik.utils;
+package com.nitesr.utils;
 
 /**
  * Created by nitesh on 1/22/22.

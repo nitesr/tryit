@@ -1,4 +1,4 @@
-package com.nitesr.ik.utils;
+package com.nitesr.utils;
 
 public class Pair<K, V> {
     K k;

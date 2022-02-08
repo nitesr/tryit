@@ -2,7 +2,7 @@ package com.nitesr.ik.sorting;
 
 import java.util.Arrays;
 
-import static com.nitesr.ik.utils.PrintArray.*;
+import static com.nitesr.utils.PrintArray.*;
 
 /**
  * Created by nitesh on 1/22/22.

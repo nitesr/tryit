@@ -2,7 +2,7 @@ package com.nitesr.ik.sorting;
 
 import java.util.Arrays;
 
-import static com.nitesr.ik.utils.PrintArray.printIntArray;
+import static com.nitesr.utils.PrintArray.printIntArray;
 
 public class CountingSort {
 

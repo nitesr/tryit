@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.function.Function;
 
-import static com.nitesr.ik.utils.PrintArray.printObjectArray;
+import static com.nitesr.utils.PrintArray.printObjectArray;
 
 public class CountingObjectSort<T> {
     T[] array;
