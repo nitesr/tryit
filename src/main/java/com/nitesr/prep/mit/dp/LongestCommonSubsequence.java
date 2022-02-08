@@ -4,18 +4,22 @@ import com.nitesr.prep.utils.PrintArray;
 
 public class LongestCommonSubsequence {
 
-    //sub-problem (S in SRTBOT)
+    //Sub-problem (S in SRTBOT):
+    //  what is LCS for subsequences S1[i:] & S2[j:] where 0 <= i <= |S1| & 0 <= j <= |S2| ?
     int lcs(String s1, int i, String s2, int j) {
         if (memo[i][j] != null) {
             return memo[i][j];
         }
 
-        //base case (B in SRTBOT)
+        //Base case (B in SRTBOT):
+        //  S1[i:] or S2[j:] is empty then LCS is 0
         if (i >= s1.length() || j >= s2.length()) {
             return memo[i][j] = 0;
         }
 
-        //recurrence relation (R in SRTBOT)
+        //Recurrence relation (R in SRTBOT):
+        //  if S1[i] & S[j] chars match find LCS of subsequences S1[i+1:] & S2[j+1:]
+        //    else find max LCS with subsequences S1[i+1:], S2[j:]
         if (s1.charAt(i) == s2.charAt(j)) {
             memo[i][j] = 1 + lcs(s1, i + 1, s2, j + 1);
         } else {
@@ -33,7 +37,10 @@ public class LongestCommonSubsequence {
 
         memo = new Integer[s1.length() + 1][s2.length() + 1];
 
-        //original problem (O in SRTBOT)
+        //Original problem (O in SRTBOT):
+        //  is on S1[0:] & S2[0:] subsequences which are nothing but given strings.
+        // Time Analysis (T in SRTBOT):
+        //   is T(relation) * sum(no. of sub-problems) = C * (|S1| * |S2|) = O(pow(n,2))
         return lcs(s1, 0, s2, 0);
     }
 
@@ -47,13 +54,16 @@ public class LongestCommonSubsequence {
         for (int i = s1.length(); i >= 0; i--) {
             for (int j = s2.length(); j >= 0; j--) {
 
-                //base case; B in SRTBOT
+                //Base case (B in SRTBOT):
+                //  S1[i:] or S2[j:] is empty then LCS is 0
                 if (i == s1.length() || j == s2.length()) {
                     memo[i][j] = 0;
                     continue;
                 }
 
-                //recurrence relation;  R in SRTBOT
+                //Recurrence relation (R in SRTBOT):
+                //  if S1[i] & S[j] chars match find LCS of subsequences S1[i+1:] & S2[j+1:]
+                //    else find max LCS with subsequences S1[i+1:], S2[j:]
                 if (s1.charAt(i) == s2.charAt(j)) {
                     memo[i][j] = 1 + memo[i + 1][j + 1];
                 } else {
@@ -62,7 +72,10 @@ public class LongestCommonSubsequence {
             }
         }
 
-        //Original Problem; O in SRTBOT
+        //Original problem (O in SRTBOT):
+        //  is on S1[0:] & S2[0:] subsequences which are nothing but given strings.
+        // Time Analysis (T in SRTBOT):
+        //   is T(relation) * sum(no. of sub-problems) = C * (|S1| * |S2|) = O(pow(n,2))
         return memo[0][0];
     }
 
