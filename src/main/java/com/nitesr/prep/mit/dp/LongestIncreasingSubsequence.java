@@ -83,21 +83,39 @@ public class LongestIncreasingSubsequence {
 
     public static void main(String[] args) {
         String ip1 = "empathy";
-        System.out.println(ip1 + ".lis() = " +
+        System.out.println("\"" + ip1 + "\"" + ".lis() = " +
                 "empty".length() + " == " +
                 new LongestIncreasingSubsequence().lis(ip1) + " == " +
                 new LongestIncreasingSubsequence().lisBottomUp(ip1));
 
         String ip2 = "carbohydrate";
-        System.out.println(ip2 + ".lis() = " +
+        System.out.println("\"" + ip2 + "\"" + ".lis() = " +
                 "abort".length() + " == " +
                 new LongestIncreasingSubsequence().lis(ip2) + " == " +
                 new LongestIncreasingSubsequence().lisBottomUp(ip2));
 
         String ip3 = "";
-        System.out.println(ip3 + ".lis() = " +
+        System.out.println("\"" + ip3 + "\"" + ".lis() = " +
                 "".length() + " == " +
                 new LongestIncreasingSubsequence().lis(ip3) + " == " +
                 new LongestIncreasingSubsequence().lisBottomUp(ip3));
+
+        String ip4 = "aaa";
+        System.out.println("\"" + ip4 + "\"" + ".lis() = " +
+                ip4.length() + " == " +
+                new LongestIncreasingSubsequence().lis(ip4) + " == " +
+                new LongestIncreasingSubsequence().lisBottomUp(ip4));
+
+        String ip5 = "abc";
+        System.out.println("\"" + ip5 + "\"" + ".lis() = " +
+                ip5.length() + " == " +
+                new LongestIncreasingSubsequence().lis(ip5) + " == " +
+                new LongestIncreasingSubsequence().lisBottomUp(ip5));
+
+        String ip6 = "cba";
+        System.out.println("\"" + ip6 + "\"" + ".lis() = " +
+                "a".length() + " == " +
+                new LongestIncreasingSubsequence().lis(ip6) + " == " +
+                new LongestIncreasingSubsequence().lisBottomUp(ip6));
     }
 }

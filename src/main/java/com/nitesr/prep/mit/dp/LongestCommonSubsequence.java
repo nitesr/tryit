@@ -11,7 +11,7 @@ public class LongestCommonSubsequence {
         }
 
         //base case (B in SRTBOT)
-        if (i == s1.length() || j == s2.length()) {
+        if (i >= s1.length() || j >= s2.length()) {
             return memo[i][j] = 0;
         }
 
@@ -19,7 +19,7 @@ public class LongestCommonSubsequence {
         if (s1.charAt(i) == s2.charAt(j)) {
             memo[i][j] = 1 + lcs(s1, i + 1, s2, j + 1);
         } else {
-            memo[i][j] = Math.max(lcs(s1, i + 1, s2, j), lcs(s2, i, s2, j + 1));
+            memo[i][j] = Math.max(lcs(s1, i + 1, s2, j), lcs(s1, i, s2, j + 1));
         }
 
         return memo[i][j];
@@ -84,5 +84,17 @@ public class LongestCommonSubsequence {
                 "empathy".length() + " == " +
                 new LongestCommonSubsequence().lcs(ip3[0], ip3[1]) + " == " +
                 new LongestCommonSubsequence().lcsBottomUp(ip3[0], ip3[1]));
+
+        String[] ip4 = {"", ""};
+        System.out.println(PrintArray.printObjectArray(ip4) + ".lcs() = " +
+                "".length() + " == " +
+                new LongestCommonSubsequence().lcs(ip4[0], ip4[1]) + " == " +
+                new LongestCommonSubsequence().lcsBottomUp(ip4[0], ip4[1]));
+
+        String[] ip5 = {"company", "brisk"};
+        System.out.println(PrintArray.printObjectArray(ip5) + ".lcs() = " +
+                "".length() + " == " +
+                new LongestCommonSubsequence().lcs(ip5[0], ip5[1]) + " == " +
+                new LongestCommonSubsequence().lcsBottomUp(ip5[0], ip5[1]));
     }
 }
