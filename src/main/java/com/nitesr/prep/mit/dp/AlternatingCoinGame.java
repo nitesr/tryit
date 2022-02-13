@@ -175,7 +175,7 @@ public class AlternatingCoinGame {
 
         int[] coins6 = {5, 10, 5, 25};
         System.out.println(printIntArray(coins6) + ".maximizeMyScore() == " +
-                " 40 == " +
+                " 35 == " +
                 new AlternatingCoinGame().maximizeMyScore(coins6) + " == " +
                 new AlternatingCoinGame().maximizeMyScoreBottomUp(coins6)
         );
