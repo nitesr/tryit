@@ -25,6 +25,10 @@ hs_err_pid*
 # intellij files #
 .idea
 *.iml
+.DS_Store
 
 # maven files #
 target
+
+# DB files #
+*.db
