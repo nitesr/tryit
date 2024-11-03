@@ -1,0 +1,113 @@
+Instagram Application Requirements:
+    - Posts feed
+        - See photos, comments, likes
+        - prioritize based on your connections and then your search history
+        - not infinite, it keeps updating as your scroll
+    - If you want to Post
+        - select photo or camera and upload
+        - server will do the magic to make it available on your connections
+    - Like other Posts
+    - search by keyword, hashtag
+    - follow / unfollow people
+
+Data Model:
+    Posts
+    likes
+    comments
+    feed
+    users
+    connections
+
+API
+    viewPost(postId, userId)
+    viewPosts(userId)
+
+    uploadPost(userId,photo)
+
+    likePost(userId, postId)
+    commentOnPost(userId, postId, comment)
+
+    generateFeed(userId)
+    fetchFeed(userId)
+
+    createAccount(user details)
+    follow(userId, followUserId)
+    unfollow(userId, followUserId)
+
+    searchAccount(userId, account_name)
+    searchPosts(userId, searchText)
+
+Services:
+    ViewSevice
+    PostService
+    LikeService
+    CommentService
+    NewsFeedService & FeedGenerationService
+    FollowService
+    SearchService & ReverseIndexService
+    
+    UserAccountService
+    AuthenticationService
+
+Logical diagram:
+    api-gateway is the entry service (ssl termination, rate-limiting, authentication, etc.)
+    (PostService, FollowSvc) -> pub-sub -> (FeedGenerationService, ReverseIndexService)
+    SearchService -> ReverseIndexService
+    ViewService -> (PostSvc, FollowSvc, CommentSvc, LikeSvc)
+    NewsFeedService -> FeedGenerationService
+
+Post Service:
+    object-store (images)
+    database (meta-data and path to image on object-store)
+    cdn for serving images
+    celebrity posts have high reads (cache it)
+    celebrity posts will be part of many user feeds - can we aggregate at runtime ??
+
+    Scale:
+        App tier:
+            100-200 concurrent operations
+            1 core is 1000 operations / sec
+            with t ms per api, api calls / sec = 100 * 1000 / t and with 30% capacity 30,000 / t api-calls per sec
+
+            For 200 KB photo, 
+                thread recieves this photo on a port, (@ 10 Mbps -> 200 ms)
+                upload photo to blobstore
+                create meta-data, 
+                find if post belongs to celebrity
+                fan-out
+                other should be very less, lets do the math with 200 ms -> 30,000/200 = 150 rps per server
+            with 1000 photos / sec -> 1000 / 150 = 7 servers
+        Storage Tier:
+            10 yrs of photo -> 10 * 400 (days) * 100,000 (sec) * 1000 (photos) * 200 KB
+                = 80 peta bytes
+            meta data -> 10 * 400 (days) * 100,000 (sec) * 1000 (photos) * 200 B
+                = 80 TB (w/o replication)
+            typical db is 4 TB, so we need shard the data 
+                    -> meta-data: 80 / 4 -> 20 servers (x3 with replication)
+                    -> assuming 1 TB for shard -> 80 shards (x3 with replication)
+                userId -> uneven distribution (can't predict number of user posts, highly uneven)
+                photoId -> even distribution but scatter-gatther for getting photos by userId 
+                        (not a usecase for photoservice)
+
+News Feed:
+    frequency of generation is based on user activity
+    consume posts and connections to generate feed at regular interval
+    the feed is stored in cache which online service (NewsFeedService) leverages 
+    NewsFeedService lookups clebriety posts at runtime
+    cache is critical here, it contains linked list of items in a feed for all active users (500 million)
+    cache tier:
+        500 million users * 500 items * 300 bytes per item = 75 TB
+        with a cache size of 75 GB, we may end up  having 1000 cache servers 
+        as this is a very critical service for instagram, the num of servers can be justified
+    
+
+
+
+
+    
+
+    
+
+
+
+

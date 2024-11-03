@@ -1,0 +1,110 @@
+Step 1: 
+    Functional requirements
+        rider can request for a trip  - advance or real time
+        rider should get cost and ETA
+        user account management - riders and drivers
+        location based multiple vehicle dashboard for rider
+        driver should be able to accept/reject a trip request
+            notifications to rider and driver
+        routing
+        once trip is set, rider should be able to check the progress of the vehicle
+        rider pays driver
+        rider and driver endorse each other
+    Non Functional requirements
+        Number of riders and drivers  - 80M riders + 4M drivers
+        Number of vehicles registered ~4-5M
+        Number of trips per month - 40M
+
+Step 2: Defining Microservices
+    Account Mangement microservice
+    Vehicle tracking microservice
+    Location based dashboard microservice
+    trip management microservice - ETA
+    payment management microservice
+    endorsement management microservice
+
+Step 3: Logical block diagram
+    User -> Account Mangement microservice, Location based dashboard microservice, 
+        endorsement service, trip management
+    Vehicle -> pub-sub -> Vehicle Tracking service -> pub-sub -> Location based 
+    Trip managment -> pub-sub -> Location based
+    Trip management -> Pyament mangement
+
+Vehicle Tracking Microservice
+    Step 4: 
+        data model: vin, geo location, status, geo-hash, prev geo-hash, other properties
+        a row oriented K-V store
+
+        api: create(vin, lat, long), updateLoc(vin, lat, long)
+
+        heavy write load, write back caching
+
+    Step 5:
+        app-tier:
+            for simple location update + calculation of geo-hash : 10ms
+            30,000 / 10 = 3000 rps per server
+            5M cars updating every 5 sec = 1M updates per sec
+            1M / 3000 ~ 334 servers 
+
+        cache-tier:
+            data size: 40 bytes per vehicle
+            5M vehicles, total memory required - 5M * 40B = 200 mb
+            can fit into 1 server, but data across world needn't be stored in same server due to latency/legal reasons.
+            1 server per geographic region - by continent
+        
+        DB tier:
+            data size = 20B (no need to store geohash)
+            For compliance, we want to store this data for 1Y at 1M intervals
+                5M vehicles, 1 year TTL = 5M * 20B * 1Y = 50 TB
+                4TB per server => 13 shards (w/o replication)
+                
+Location based dashboard microservice
+    Step 4:
+        data-model: K-V pair
+            K: loctionId, V: list of vehicles + properties + location
+            Loc_adj_list: nort, east, south, west, ne, nw, se, sw
+        in-memory tier:
+            hash table - geo-hash as key and list of cars within geohash as values
+        storage tier: row-oriented
+        apis:
+            get(location_id) -> all vehicles given location
+            get(location_id, properties) -> search vehicles with certain properties given location
+        
+        Q: Driver - Rider pairing to reduce wasteful miles. 
+            (Hungarian matching algorithm)
+
+        Q: How are ETAs calculated (optimum path) ?
+            Dijkstra's algorithm or BFS 
+            Optimization to reduce the size of points by asking riders to come to a location at busy areas e.g. mall, airport, etc.
+    
+    Step 5:
+        cache-tier: 20B, 20 cars per cell -> 400 bytes per cell
+                    Number of cells for 6 char geohash ~= 32^6 ~= 1 billion
+                    1 billion * 400 bytes ~= 400 gb
+                    assuming 1 server can store about 40 GB -> 10 servers
+                Sharding:
+                    horizontal + vertical 
+                    horizontal: geo distribution (shards in west coast containing geohash near that region)
+                    vertical: within geo distribution, shard based on driver Ids to distribute write ops
+                    consistent hashing
+                Replication: Yes for availability
+                concurrency: API parallelization of fetching data from neighboring cells
+                CAP: AP as doesn't need to be strictly nanoseconds level consistent
+                    N = 3, R = 2 and W = 2 (high throughput, lowest latency)
+
+
+
+https://highscalability.com/more-numbers-every-awesome-programmer-must-know/
+https://highscalability.com/numbers-everyone-should-know/
+
+
+link: https://geohash.softeng.co/9vg
+
+
+
+
+
+
+
+
+    

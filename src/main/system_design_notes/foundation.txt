@@ -1,0 +1,74 @@
+
+Availabilty vs Reliability:
+    Availability is about system/service uptime in nines 
+        (99.9% available - 50 min downtime a month)
+        (99.99% available - 5 min downtime a month)
+    Reliability is about system availability during critial times
+        e.g. in driverless cars a single failure can result in injury or dealth
+            even though the system is available 99.99%
+        usually measured in incidents/failures
+
+Cache:
+    Write Through: writes to cache are synchronously written to DB. 
+        consistency is a priority
+        writes are followed by reads
+    Write Back: writes to cache are asynchronously written to DB
+        Availability is a priority
+        its okay to loose writes as they will be available in next few mins
+    Write around / cache-a-side: app writes to DB, write to cache are done on cache-miss or scheduled
+        not-all (or very seldom) writes are read immediately
+
+Q: For write-through and write-back cache's is the cache interacting with DB directly or the application can doing it typically in the implementations ?
+
+
+Storage:
+    Row oriented
+        transactional systems (OLTP workload)
+        relational dbs - mysql, oracle
+        CRUD are common operations
+
+    Column oriented
+        Analytics systems (OLAP workload)
+        e.g. - aws redshift, snowflakes, athena, apache cassandra, 
+        large datasets
+        organized in columns
+
+System design:
+    Step 1: Gather all requirements of the system (5 min)
+        Gather all requirements of the system
+            a. functional requirements - user view
+            b. ask clarifying questions and limit the scope
+        Design constraints / scalability requirements
+            a. Number of users, TPS, etc.
+            b. may ask the candidate to assume, not spend lot of time, it should be scalable anyway and can be collected later.
+    
+    Step 2: Defining Microservices of the system (7 min)
+        Bucketize the functional requirements into Microservices
+            a. cluster requirements such that it can handled by a team independently
+            b. Define micro services, api, data-model
+            b. Rule of thumb - if api and data-model doesn't look the same put them in different buckets
+            c. is it depth oriented (1 microservice) or breadth oriented (many microservices)
+            d. at end, select one core microservice for deep dive and give reason  (brownie points)
+    
+    Step 3: Design the Logical Architecture (2 min)
+            a. communicate the persona and user flow
+            b. high level flow through the microservices
+
+    Step 4: Deep dive into important microservice (20 min)
+        a. dive into app, cache, storage tiers
+        b. can name some off-the shelf technologies in each tier
+        c. how much is the cost to the company ? 
+        More of ROI for leadership roles
+    
+    Step 5: Identify the need for scale (5 min)
+        a. read heavy vs write heavy ?
+        b. cp or ap system ?
+        c. need to scale for storage, throughtput, parallelization, hotspots, availability/geo ?
+        d. horizontal vs vertical scaling ?
+    
+    Step 6: Propose distributed system (5 min)
+        a. glue everything (LB, shards config, auditing, etc..)
+
+Books:
+    System Design : Volume 2 (ByteByteGo - Alex xu) - like a novel
+    The System Design Interview (Lewis C. Lin) - serious book
