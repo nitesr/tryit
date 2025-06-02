@@ -15,6 +15,7 @@
 #
 
 def krushkal_union_find(n, edges):
+    # initalize (parent, num_children) for each vertex
     parent = [(i, 1) for i in range(n+1)]
     num_mst_edges = 0
 
@@ -22,6 +23,7 @@ def krushkal_union_find(n, edges):
        if parent[node][0] == node:
            return parent[node]
        
+       # replace the root node for faster find next time
        root_node = _find_root(parent[node][0])
        parent[node] = (root_node[0], -1)
        return root_node
@@ -31,6 +33,7 @@ def krushkal_union_find(n, edges):
     for n1, n2, wt in sorted(edges, key=lambda e: ( e[2], e[0], e[1] )):
         r1 = _find_root(n1)
         r2 = _find_root(n2)
+        # merge two rooted sets into to one if they differ
         if r1[0] != r2[0]:
             p_root, c_root = (r1, r2) if r1[1] > r2[1] else (r2, r1)
             parent[c_root[0]] = (p_root[0], -1)
@@ -39,6 +42,8 @@ def krushkal_union_find(n, edges):
             num_mst_edges += 1
             mst_edges.append([n1, n2, wt])
     
+    # if number of edges are lesser than (n-1), the graph is disconnected
+    #   it can't be greater
     if num_mst_edges != n-1:
         return [], -1
     
