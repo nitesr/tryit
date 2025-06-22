@@ -14,33 +14,23 @@ def inorder_traversal(node: Node) -> List[int]:
 
     results = []
     while stack:
-        # capture the value for the leaf node
-        if stack[-1].left is None and stack[-1].right is None:
-            results.append(stack[-1].value)
-            last_seen = stack.pop()
+        top_node = stack[-1]
+
+        # try left subtree if haven't seen both left and right (if it has seen right, it has already seen left)
+        if top_node.left and top_node.left != last_seen and top_node.right != last_seen:
+            stack.append(top_node.left)
             continue
 
-        # if last_seen is same as right, we are done with right sub-tree
-        if stack[-1].right == last_seen:
-            last_seen = stack.pop()
-        
-        # if last_seen is same as left or left doesn't exist, we done with left sub-tree
-        elif stack[-1].left is None or stack[-1].left == last_seen:
-            results.append(stack[-1].value)
+        # capture if not already did (i.e. right node not seen)
+        if top_node.right != last_seen:
+            results.append(top_node.value)
 
-            # we have to start traversing right sub-tree
-            if stack[-1].right is not None:
-                last_seen = stack[-1].right
-                stack.append(last_seen)
-            else:
-                # there is nothing to traverse on right sub-tree
-                last_seen = stack.pop()
+        # try right subtree if haven't seen
+        if top_node.right and top_node.right != last_seen:
+            stack.append(top_node.right)
+            continue
 
-        # we are have to start traversing left sub-tree
-        else:
-            last_seen = stack[-1].left
-            stack.append(last_seen)
-            
+        last_seen = stack.pop()
     
     return results
 

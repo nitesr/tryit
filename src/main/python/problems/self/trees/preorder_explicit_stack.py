@@ -14,23 +14,23 @@ def preorder_traversal(node: Node) -> List[int]:
 
     results = [node.value]
     while stack:
-        if stack[-1].left is None and stack[-1].right is None:
-            last_seen = stack.pop()
+        top_node = stack[-1]
+
+        # try left subtree if haven't seen both left and right (if it has seen right, it has already seen left)
+        if top_node.left and top_node.left != last_seen and top_node.right != last_seen:
+            # capture the value at the time of entering
+            results.append(top_node.left.value)
+            stack.append(top_node.left)
             continue
 
-        if stack[-1].right == last_seen:
-            last_seen = stack.pop()
-        elif stack[-1].left is None or stack[-1].left == last_seen:
-            if stack[-1].right is not None:
-                last_seen = stack[-1].right
-                results.append(last_seen.value)
-                stack.append(last_seen)
-            else:
-                last_seen = stack.pop()
-        else:
-            last_seen = stack[-1].left
-            results.append(last_seen.value)
-            stack.append(last_seen)
+        # try right subtree if haven't seen
+        if top_node.right and top_node.right != last_seen:
+            # capture the value at the time of entering
+            results.append(top_node.right.value)
+            stack.append(top_node.right)
+            continue
+
+        last_seen = stack.pop()
             
     
     return results

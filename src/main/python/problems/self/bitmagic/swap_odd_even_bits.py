@@ -8,8 +8,8 @@ Example:
 """
 
 def swap_odd_even_bits(num):
-    odd_mask = int(0b10101010101010101010101010101010)
-    even_mask =  int(0b01010101010101010101010101010101)
+    odd_mask = int('10'*10, 2)
+    even_mask =  int('01'*10, 2)
 
     even_bits = num & even_mask
     odd_bits = num & odd_mask

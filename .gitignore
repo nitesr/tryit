@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+# Python binary
+__pycache__
+*/__pycache__/*
+
 # Log file
 *.log
 
